@@ -23,7 +23,7 @@ export function MainNav() {
       <div className="container mx-auto px-6 lg:px-10">
         <div className="flex items-center justify-between h-20">
           <a href="/" className="text-3xl font-bold text-primary tracking-tight">
-            BLIND
+            PASSION
           </a>
           <div className="flex items-center space-x-8">
             <nav className="hidden md:flex md:space-x-8">

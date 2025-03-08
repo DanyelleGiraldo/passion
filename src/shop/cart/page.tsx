@@ -14,7 +14,7 @@ export default function CartPage() {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("es-ES", {
       style: "currency",
-      currency: "EUR",
+      currency: "COP",
     }).format(price)
   }
 

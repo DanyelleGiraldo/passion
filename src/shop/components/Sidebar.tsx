@@ -2,21 +2,31 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "./Buttons";
 import { useFilter } from "./context/FilterContext";
+import { products } from "./data/products";
 
-const categories = [
-  { name: "MUJER", count: 160, subcategories: ["Perfumes", "Cremas", "Maquillaje"] },
-  { name: "HOMBRE", count: 148, subcategories: ["Perfumes", "Aftershave", "Desodorantes"] },
-  // ... resto de categorías
-];
+const getCategoryCounts = () => {
+  const categoryCounts: Record<string, number> = {};
+  products.forEach((product) => {
+    categoryCounts[product.category] = (categoryCounts[product.category] || 0) + 1;
+  });
+
+  return [
+    { name: "Lava", subcategories: ["Shampoo", "Acondicionador", "Tratamientos"], count: categoryCounts["Lava"] || 0 },
+    { name: "Tratar", subcategories: ["Mascarillas", "Ampollas", "Sueros"], count: categoryCounts["Tratar"] || 0 },
+    { name: "Estilizar", subcategories: ["Gel", "Cera", "Spray"], count: categoryCounts["Estilizar"] || 0 },
+    { name: "Herramientas", subcategories: ["Secadores", "Planchas", "Cepillos"], count: categoryCounts["Herramientas"] || 0 },
+  ];
+};
 
 export function Sidebar() {
   const [openCategory, setOpenCategory] = useState<string | null>(null);
   const { setSelectedCategory, setSelectedSubcategory } = useFilter();
+  const categories = getCategoryCounts(); // Obtener categorías con conteo dinámico
 
   const toggleCategory = (categoryName: string) => {
     setOpenCategory(openCategory === categoryName ? null : categoryName);
     setSelectedCategory(categoryName);
-    setSelectedSubcategory(null); // Reset subcategory when changing category
+    setSelectedSubcategory(null);
   };
 
   const handleSubcategoryClick = (subcategory: string) => {
@@ -36,8 +46,7 @@ export function Sidebar() {
                 onClick={() => toggleCategory(category.name)}
               >
                 <span>
-                  {category.name}
-                  {category.count && ` (${category.count})`}
+                  {category.name} ({category.count})
                 </span>
                 {openCategory === category.name ? (
                   <ChevronUp className="h-4 w-4" />
@@ -49,9 +58,9 @@ export function Sidebar() {
               {openCategory === category.name && (
                 <div className="ml-4 mt-2 space-y-1">
                   {category.subcategories.map((sub) => (
-                    <Button 
-                      key={sub} 
-                      variant="ghost" 
+                    <Button
+                      key={sub}
+                      variant="ghost"
                       className="w-full justify-start text-sm text-gray-600"
                       onClick={() => handleSubcategoryClick(sub)}
                     >
