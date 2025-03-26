@@ -1,15 +1,15 @@
 "use client"
 
 import { Search, ShoppingBag } from "lucide-react"
-import { Button } from "./Buttons"
-import { useCart } from "../cart/components/CartContext";
+import { Button } from "../../shop/components/Buttons"
+import { useCart } from "../..//shop/cart/components/CartContext";
 
 const navigation = [
   { name: "Inicio", href: "/" },
   { name: "Productos", href: "/shop" },
 ]
 
-export function MainNav() {
+export default function Header() {
   const { totalItems } = useCart()
 
   return (

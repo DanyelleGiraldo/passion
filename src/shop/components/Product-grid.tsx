@@ -5,18 +5,7 @@ import { ShoppingCart } from "lucide-react";
 import { useCart } from "../cart/components/CartContext";
 import { useFilter } from "./context/FilterContext";
 import { products } from "./data/products";
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  discount: string;
-  price: number;
-  description: string;
-  category: string;
-  subcategory: string;
-  variants: { id: number; name: string; price: number }[];
-}
+import { Product } from "../../layout/components/products";
 
 export function ProductGrid() {
   const { selectedCategory, selectedSubcategory } = useFilter();
@@ -116,7 +105,31 @@ export function ProductGrid() {
             </div>
             <div className="md:w-3/5 flex flex-col">
               <p className="mb-4 text-gray-700">{selectedProduct.description}</p>
-              <Button className="w-full mt-auto" onClick={handleAddToCart}>
+
+              {/* Botones para seleccionar variante */}
+              <div className="mb-4">
+                <h4 className="text-sm font-medium text-gray-900 mb-2">Variantes:</h4>
+                <div className="flex gap-2">
+                  {selectedProduct.variants.map((variant) => (
+                    <button
+                      key={variant.id}
+                      className={`px-4 py-2 border rounded-md ${
+                        selectedVariant === variant.id ? "bg-primary text-white" : "bg-gray-100"
+                      }`}
+                      onClick={() => setSelectedVariant(variant.id)}
+                    >
+                      {variant.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mostrar precio de la variante seleccionada */}
+              <p className="text-lg font-semibold text-primary">
+                {formatPrice(selectedProduct.variants.find(v => v.id === selectedVariant)?.price || selectedProduct.price)}
+              </p>
+
+              <Button className="w-full mt-4" onClick={handleAddToCart}>
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Añadir al carrito
               </Button>

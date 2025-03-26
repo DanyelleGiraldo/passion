@@ -47,7 +47,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
       <div
         ref={modalRef}
-        className="relative w-[90%] md:w-[70%] max-w-6xl rounded-lg bg-white p-4 md:p-6 shadow-lg mx-auto my-auto overflow-auto max-h-[90vh]"
+        className="relative w-[80%] md:w-[80%] max-w-6xl rounded-lg bg-white p-4 md:p-6 shadow-lg mx-auto my-auto max-h-[80vh] flex flex-col"
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
@@ -55,9 +55,8 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             <X className="h-5 w-5" />
           </Button>
         </div>
-        <div>{children}</div>
+        <div className="flex-1 overflow-auto">{children}</div>
       </div>
     </div>
   )
 }
-
